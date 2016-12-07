@@ -11,13 +11,37 @@ struct GLProgram;
 class SmokeSystem
 {
  public:
-    virtual ~SmokeSystem() {}
+    SmokeSystem();
+    ~SmokeSystem() {}
 
-    void addExternalForces(std::vector<Vector3f> density);
+    void addExternalForces(float stepSize);
+    
+    void advect(float stepSize);
+    
+    void diffuse(float stepSize);
+    
+    void project(flaot stepSize);
+    
+    void addExternalSources(float stepSize);
+    
+    void convect(float stepSize);
+    
+    void diffuseDensity(stepSize);
+
+    void draw(GLProgram&);
     
  protected:
-    std::vector<Vector3f> m_vVecState;
-    std::vector<Vector3f> m_dVecState;
+    std::vector<Vector3f> velocity;
+    std::vector<Vector3f> oldVelocity;
+    std::vector<Vector3f> density;
+    std::vector<Vector3f> oldDensity;
+    std::vector<Vector3f> curl;
+
+    float stepSize;
+    float visc = 0.0f;
+    float diff = 0.0f;
+    int n;
+    
 };
 
 class Camera;

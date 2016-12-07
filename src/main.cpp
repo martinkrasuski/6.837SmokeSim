@@ -181,6 +181,7 @@ void initSystem()
     case 'e': timeStepper = new ForwardEuler(); break;
     case 't': timeStepper = new Trapezoidal(); break;
     case 'r': timeStepper = new RK4(); break;
+    case 's': timeStepper = new NavierStokes(); break;
     default: printf("Unrecognized integrator\n"); exit(-1);
     }
 
