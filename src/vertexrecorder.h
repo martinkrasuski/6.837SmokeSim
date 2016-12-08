@@ -40,4 +40,10 @@ void drawQuad(float w);
 
 void drawCube(float w);
 
+void drawLine(Vector3f a, Vector3f b);
+
+void drawLeftQuad(float w);
+
+void drawFrontQuad(float w);
+
 #endif

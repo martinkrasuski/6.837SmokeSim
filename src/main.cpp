@@ -10,11 +10,8 @@
 #include "vertexrecorder.h"
 #include "starter3_util.h"
 #include "camera.h"
-#include "timestepper.h"
-#include "simplesystem.h"
-#include "pendulumsystem.h"
-#include "clothsystem.h"
 #include "smokesystem.h"
+#include "fluidCube.h"
 
 using namespace std;
 
@@ -45,7 +42,6 @@ double elapsed_s;
 double simulated_s;
 
 // Globals here.
-TimeStepper* timeStepper;
 float h;
 char integrator;
 
@@ -54,10 +50,9 @@ bool gMousePressed = false;
 GLuint program_color;
 GLuint program_light;
 
-SimpleSystem* simpleSystem;
-PendulumSystem* pendulumSystem;
-ClothSystem* clothSystem;
 SmokeSystem* smokeSystem;
+
+FluidCube* fluidSystem;
 
 // Function implementations
 static void keyCallback(GLFWwindow* window, int key,
@@ -87,6 +82,13 @@ static void keyCallback(GLFWwindow* window, int key,
         initSystem();
         resetTime();
         break;
+    }
+    case 'W':
+	{
+	cout << "adding velocity\n";
+	FluidCubeAddVelocity(fluidSystem, 1, 1, 1, 10, 1, 1);
+	//FluidCubeAddDensity(fluidSystem, 5, 5, 5, 2);
+	break;
     }
     default:
         cout << "Unhandled key press " << key << "." << endl;
@@ -179,28 +181,23 @@ void drawAxis()
 // initialize your particle systems
 void initSystem()
 {
-    switch (integrator) {
+    /*switch (integrator) {
     case 'e': timeStepper = new ForwardEuler(); break;
     case 't': timeStepper = new Trapezoidal(); break;
     case 'r': timeStepper = new RK4(); break;
 	//case 's': timeStepper = new NavierStokes(); break;
     default: printf("Unrecognized integrator\n"); exit(-1);
-    }
+    }*/
 
-    //simpleSystem = new SimpleSystem();
     // TODO you can modify the number of particles
-    //pendulumSystem = new PendulumSystem();
-    // TODO customize initialization of cloth system
-    //clothSystem = new ClothSystem();
-    smokeSystem = new SmokeSystem();
+    //smokeSystem = new SmokeSystem();
+    fluidSystem = FluidCubeCreate(10, 0, 0, .1);
+    
 }
 
 void freeSystem() {
-    delete simpleSystem; simpleSystem = nullptr;
-    delete timeStepper; timeStepper = nullptr;
-    delete pendulumSystem; pendulumSystem = nullptr;
-    delete clothSystem; clothSystem = nullptr;
     delete smokeSystem; smokeSystem = nullptr;
+    FluidCubeFree(fluidSystem);
 }
 
 void resetTime() {
@@ -215,9 +212,8 @@ void stepSystem()
 {
     // step until simulated_s has caught up with elapsed_s.
     while (simulated_s < elapsed_s) {
-        //timeStepper->takeStep(simpleSystem, h);
-        //timeStepper->takeStep(pendulumSystem, h);
-        //timeStepper->takeStep(clothSystem, h);
+	FluidCubeStep(fluidSystem);
+	//FluidCubeAddVelocity(fluidSystem, 1, 1, 1, 10, 1, 1);
         simulated_s += h;
     }
 }
@@ -230,10 +226,8 @@ void drawSystem()
     GLProgram gl(program_light, program_color, &camera);
     gl.updateLight(LIGHT_POS, LIGHT_COLOR.xyz()); // once per frame
 
-    //simpleSystem->draw(gl);
-    //pendulumSystem->draw(gl);
-    //clothSystem->draw(gl);
-    smokeSystem->draw(gl);
+    //smokeSystem->draw(gl);
+    FluidDraw(fluidSystem, gl);
 
     // set uniforms for floor
     gl.updateMaterial(FLOOR_COLOR);

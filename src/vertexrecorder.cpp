@@ -249,3 +249,55 @@ void drawQuad(float w)
     rec.record(P4, N);
     rec.draw();
 }
+
+void drawLeftQuad(float w)
+{
+    VertexRecorder rec;
+    float wh = w / 2;
+    const Vector3f N(-1, 0, 0);
+    const Vector3f P1(0, -wh, -wh);
+    const Vector3f P2(0, +wh, -wh);
+    const Vector3f P3(0, +wh, +wh);
+    const Vector3f P4(0, -wh, +wh);
+
+    // first face                                                                                   
+    rec.record(P1, N);
+    rec.record(P2, N);
+    rec.record(P3, N);
+
+    // second face                                                                                  
+    rec.record(P1, N);
+    rec.record(P3, N);
+    rec.record(P4, N);
+    rec.draw();
+}
+
+void drawFrontQuad(float w)
+{
+    VertexRecorder rec;
+    float wh = w / 2;
+    const Vector3f N(0, 0, 1);
+    const Vector3f P1(-wh, -wh, 0);
+    const Vector3f P2(+wh, -wh, 0);
+    const Vector3f P3(+wh, +wh, 0);
+    const Vector3f P4(-wh, +wh, 0);
+
+    // first face                                                                                   
+    rec.record(P1, N);
+    rec.record(P2, N);
+    rec.record(P3, N);
+
+    // second face                                                                                  
+    rec.record(P1, N);
+    rec.record(P3, N);
+    rec.record(P4, N);
+    rec.draw();
+}
+
+void drawLine(Vector3f a, Vector3f b) {
+    VertexRecorder rec;
+    const Vector3f N(0, 1, 0);
+    rec.record(a, N);
+    rec.record(b, N);
+    rec.draw();
+}

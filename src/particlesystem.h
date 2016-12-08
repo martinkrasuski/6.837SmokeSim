@@ -50,7 +50,7 @@ struct GLProgram {
         Vector3f ambientColor = Vector3f(-1, -1, -1),
         Vector3f specularColor = Vector3f(0, 0, 0), 
         float shininess = 1.0f,
-        float alpha = 1.0f) const;
+        float alpha = 0.5f) const;
 
     // Update lighting. Sets position and color of a single light source
     // in world space.
