@@ -8,6 +8,17 @@
 SmokeSystem::SmokeSystem() {
     n = 10;
     stepSize = .1;
+    for(int i = 0; i < n; i++) {
+	for(int j = 0; j < n; j++) {
+	    for(int k = 0; k < n; k++) {
+		velocity.push_back(Vector3f::ZERO);
+		oldVelocity.push_back(Vector3f::ZERO);
+		density.push_back(Vector3f::ZERO);
+		oldDensity.push_back(Vector3f::ZERO);
+		curl.push_back(Vector3f::ZERO);
+	    }
+	}
+    }
 }
 
 void SmokeSystem::swapVelocity() {
@@ -37,8 +48,10 @@ void SmokeSystem::draw(GLProgram& gl)
     // example code. Replace with your own drawing  code                         
     //gl.updateModelMatrix(Matrix4f::translation(Vector3f(-0.5, 1.0, 0)));       
     //drawSphere(0.075f, 10, 10);                                                
-    for(int i = 0; i < particles.size(); i++) {
+    /*for(int i = 0; i < particles.size(); i++) {
         gl.updateModelMatrix(Matrix4f::translation(getState()[2 * i]));
         drawSphere(0.075f, 10, 10);
-    }
+	}*/
+    gl.updateModelMatrix(Matrix4f::translation(Vector3f(0, 0, 0)));
+    drawSphere(0.075f, 10, 10);
 }

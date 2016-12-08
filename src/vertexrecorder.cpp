@@ -142,7 +142,7 @@ void drawSphere(float r, int slices, int stacks) {
     }
     rec.draw();
 }
-/*
+
 void drawCube(float w) {
     assert(w >= 0);
     float wh = w / 2.0f;
@@ -167,7 +167,7 @@ void drawCube(float w) {
 
 
     rec.draw();
-}*/
+}
 
 void drawCylinder(int nsides, float r, float h) {
     assert(nsides >= 3);
