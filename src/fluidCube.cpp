@@ -28,8 +28,8 @@ FluidCube *FluidCubeCreate(int size, int diffusion, int viscosity, float dt)
     cube->Vy0 = (float *) calloc(N * N * N, sizeof(float));
     cube->Vz0 = (float *) calloc(N * N * N, sizeof(float));
 
-    for(int i = 0; i < N; i++) {
-	FluidCubeAddVelocity(cube, 1, i, 1, 10, 1, 1);
+    for (int i = 0; i < N; i++) {
+	    FluidCubeAddVelocity(cube, 1, i, 1, 10, 1, 1);
     }
     
     return cube;
@@ -328,47 +328,49 @@ void draw_density(FluidCube * cube, GLProgram& gl) {
     h = 1.0f/cube->size;
     float * dens = cube->density;
 
-    for(i = 1; i <= cube->size; i++) {
+    for (i = 1; i <= cube->size; i++) {
 	x = (i - 0.5f) * h;
-	for(j =1; j <= cube->size; j++) {
-	    y = (j - 0.5f) * h;
-	    for( k = 1; k <= cube->size; k++) {
-		int index = IX(i, j, k);
-		z = (k - 0.5f) * h;
-		d000 = dens[IX(i,j,k)];
-		d010 = dens[IX(i,j+1,k)];
-		d100 = dens[IX(i+1,j,k)];
-		d110 = dens[IX(i+1,j+1,k)];
+        
+        for (j =1; j <= cube->size; j++) {
+            y = (j - 0.5f) * h;
+            
+            for (k = 1; k <= cube->size; k++) {
+                int index = IX(i, j, k);
+                z = (k - 0.5f) * h;
+                d000 = dens[IX(i,j,k)];
+                d010 = dens[IX(i,j+1,k)];
+                d100 = dens[IX(i+1,j,k)];
+                d110 = dens[IX(i+1,j+1,k)];
 
-		d001 = dens[IX(i,j,k+1)];
-		d011 = dens[IX(i,j+1,k+1)];
-		d101 = dens[IX(i+1,j,k+1)];
-		d111 = dens[IX(i+1,j+1,k+1)];
+                d001 = dens[IX(i,j,k+1)];
+                d011 = dens[IX(i,j+1,k+1)];
+                d101 = dens[IX(i+1,j,k+1)];
+                d111 = dens[IX(i+1,j+1,k+1)];
 
-		gl.updateMaterial(Vector3f(d111, d111, d111));
-		gl.updateModelMatrix(Matrix4f::translation(Vector3f(x - h, y, z)));
-		drawLeftQuad(h * 2);
+                gl.updateMaterial(Vector3f(d111, d111, d111));
+                gl.updateModelMatrix(Matrix4f::translation(Vector3f(x - h, y, z)));
+                drawLeftQuad(h * 2);
 
-		//gl.updateMaterial(Vector3f(d000, d000, d000));
-		gl.updateModelMatrix(Matrix4f::translation(Vector3f(x + h, y, z)));
-		drawLeftQuad(h * 2);
+                //gl.updateMaterial(Vector3f(d000, d000, d000));
+                gl.updateModelMatrix(Matrix4f::translation(Vector3f(x + h, y, z)));
+                drawLeftQuad(h * 2);
 
-		//gl.updateMaterial(Vector3f(d001, d001, d001));
-		gl.updateModelMatrix(Matrix4f::translation(Vector3f(x, y, z + h)));
-		drawFrontQuad(h * 2);
-		
-		//gl.updateMaterial(Vector3f(d011, d011, d011));
-		gl.updateModelMatrix(Matrix4f::translation(Vector3f(x, y, z - h)));
-		drawFrontQuad(h * 2);
+                //gl.updateMaterial(Vector3f(d001, d001, d001));
+                gl.updateModelMatrix(Matrix4f::translation(Vector3f(x, y, z + h)));
+                drawFrontQuad(h * 2);
+                
+                //gl.updateMaterial(Vector3f(d011, d011, d011));
+                gl.updateModelMatrix(Matrix4f::translation(Vector3f(x, y, z - h)));
+                drawFrontQuad(h * 2);
 
-		//gl.updateMaterial(Vector3f(d101, d101, d101));
-		gl.updateModelMatrix(Matrix4f::translation(Vector3f(x, y + h, z)));
-		drawQuad(h * 2);
+                //gl.updateMaterial(Vector3f(d101, d101, d101));
+                gl.updateModelMatrix(Matrix4f::translation(Vector3f(x, y + h, z)));
+                drawQuad(h * 2);
 
-		//gl.updateMaterial(Vector3f(d100, d100, d100));
-		gl.updateModelMatrix(Matrix4f::translation(Vector3f(x, y - h, z)));
-		drawQuad(h * 2);
-	    }
-	}
+                //gl.updateMaterial(Vector3f(d100, d100, d100));
+                gl.updateModelMatrix(Matrix4f::translation(Vector3f(x, y - h, z)));
+                drawQuad(h * 2);
+            }
+        }
     }
 }
