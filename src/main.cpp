@@ -213,6 +213,9 @@ void stepSystem()
     // step until simulated_s has caught up with elapsed_s.
     while (simulated_s < elapsed_s) {
 	FluidCubeStep(fluidSystem);
+	for(int i = 0; i < 10; i++) {
+	    FluidCubeAddVelocity(fluidSystem, i, 1, 1, 0, 2, 0);
+	}
 	//FluidCubeAddVelocity(fluidSystem, 1, 1, 1, 10, 1, 1);
         simulated_s += h;
     }

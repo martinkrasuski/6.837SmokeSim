@@ -228,11 +228,16 @@ void drawCylinder(int nsides, float r, float h) {
     rec.draw();
 }
 
-void drawQuad(float w)
+void drawQuad(float w, bool drawTop)
 {
     VertexRecorder rec;
     float wh = w / 2;
-    const Vector3f N(0, 1, 0);
+    Vector3f N;
+    if(drawTop) {
+	Vector3f N(0, 1, 0);
+    } else {
+	Vector3f N(0, -1, 0);
+    }
     const Vector3f P1(-wh, 0, -wh);
     const Vector3f P2(+wh, 0, -wh);
     const Vector3f P3(+wh, 0, +wh);
@@ -250,11 +255,16 @@ void drawQuad(float w)
     rec.draw();
 }
 
-void drawLeftQuad(float w)
+void drawLeftQuad(float w, bool drawLeft)
 {
     VertexRecorder rec;
     float wh = w / 2;
-    const Vector3f N(-1, 0, 0);
+    Vector3f N;
+    if(drawLeft) {
+	Vector3f N(-1, 0, 0);
+    } else {
+	Vector3f N(1, 0, 0);
+    }
     const Vector3f P1(0, -wh, -wh);
     const Vector3f P2(0, +wh, -wh);
     const Vector3f P3(0, +wh, +wh);
@@ -272,11 +282,16 @@ void drawLeftQuad(float w)
     rec.draw();
 }
 
-void drawFrontQuad(float w)
+void drawFrontQuad(float w, bool drawFront)
 {
     VertexRecorder rec;
     float wh = w / 2;
-    const Vector3f N(0, 0, 1);
+    Vector3f N;
+    if(drawFront) {
+	Vector3f N(0, 0, 1);
+    } else {
+	Vector3f N(0, 0, -1);
+    }
     const Vector3f P1(-wh, -wh, 0);
     const Vector3f P2(+wh, -wh, 0);
     const Vector3f P3(+wh, +wh, 0);

@@ -36,14 +36,14 @@ void drawSphere(float r, int slices, int stacks);
 void drawCylinder(int nsides, float r, float h);
 
 // draw a quad in the XZ plane with normal in +Y direction
-void drawQuad(float w);
+void drawQuad(float w, bool drawTop = true);
 
 void drawCube(float w);
 
 void drawLine(Vector3f a, Vector3f b);
 
-void drawLeftQuad(float w);
+void drawLeftQuad(float w, bool drawLeft = true);
 
-void drawFrontQuad(float w);
+void drawFrontQuad(float w, bool drawFront = true);
 
 #endif
