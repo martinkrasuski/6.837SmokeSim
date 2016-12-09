@@ -234,9 +234,9 @@ void drawQuad(float w, bool drawTop)
     float wh = w / 2;
     Vector3f N;
     if(drawTop) {
-	Vector3f N(0, 1, 0);
+	    Vector3f N(0, 1, 0);
     } else {
-	Vector3f N(0, -1, 0);
+	    Vector3f N(0, -1, 0);
     }
     const Vector3f P1(-wh, 0, -wh);
     const Vector3f P2(+wh, 0, -wh);
@@ -261,9 +261,9 @@ void drawLeftQuad(float w, bool drawLeft)
     float wh = w / 2;
     Vector3f N;
     if(drawLeft) {
-	Vector3f N(-1, 0, 0);
+	    Vector3f N(-1, 0, 0);
     } else {
-	Vector3f N(1, 0, 0);
+	    Vector3f N(1, 0, 0);
     }
     const Vector3f P1(0, -wh, -wh);
     const Vector3f P2(0, +wh, -wh);
@@ -288,9 +288,9 @@ void drawFrontQuad(float w, bool drawFront)
     float wh = w / 2;
     Vector3f N;
     if(drawFront) {
-	Vector3f N(0, 0, 1);
+	    Vector3f N(0, 0, 1);
     } else {
-	Vector3f N(0, 0, -1);
+	    Vector3f N(0, 0, -1);
     }
     const Vector3f P1(-wh, -wh, 0);
     const Vector3f P2(+wh, -wh, 0);
