@@ -9,15 +9,15 @@ SmokeSystem::SmokeSystem() {
     n = 10;
     stepSize = .1;
     for(int i = 0; i < n; i++) {
-	for(int j = 0; j < n; j++) {
-	    for(int k = 0; k < n; k++) {
-		velocity.push_back(Vector3f::ZERO);
-		oldVelocity.push_back(Vector3f::ZERO);
-		density.push_back(Vector3f::ZERO);
-		oldDensity.push_back(Vector3f::ZERO);
-		curl.push_back(Vector3f::ZERO);
-	    }
-	}
+        for(int j = 0; j < n; j++) {
+            for(int k = 0; k < n; k++) {
+                velocity.push_back(Vector3f::ZERO);
+                oldVelocity.push_back(Vector3f::ZERO);
+                density.push_back(Vector3f::ZERO);
+                oldDensity.push_back(Vector3f::ZERO);
+                curl.push_back(Vector3f::ZERO);
+            }
+        }
     }
 }
 
@@ -34,7 +34,7 @@ void SmokeSystem::swapDensity() {
 }
 
 int SmokeSystem::index(int i, int j) {
-    return i + (n *j);
+    return i + (n * j);
 }
 
 

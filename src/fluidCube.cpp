@@ -108,13 +108,13 @@ static void lin_solve(int b, float *x, float *x0, float a, float c, int iter, in
                 for (int i = 1; i < N - 1; i++) {
                     x[IX(i, j, m)] =
                         (x0[IX(i, j, m)]
-			 + a*(    x[IX(i+1, j  , m  )]
-				  +x[IX(i-1, j  , m  )]
-				  +x[IX(i  , j+1, m  )]
-				  +x[IX(i  , j-1, m  )]
-				  +x[IX(i  , j  , m+1)]
-				  +x[IX(i  , j  , m-1)]
-				  )) * cRecip;
+			            + a*(    x[IX(i+1, j  , m  )]
+                          +x[IX(i-1, j  , m  )]
+                          +x[IX(i  , j+1, m  )]
+                          +x[IX(i  , j-1, m  )]
+                          +x[IX(i  , j  , m+1)]
+                          +x[IX(i  , j  , m-1)]
+                          )) * cRecip;
                 }
             }
         }
@@ -128,7 +128,8 @@ static void diffuse (int b, float *x, float *x0, float diff, float dt, int iter,
     lin_solve(b, x, x0, a, 1 + 6 * a, iter, N);
 }
 
-static void advect(int b, float *d, float *d0,  float *velocX, float *velocY, float *velocZ, float dt, int N)
+static void advect(int b, float *d, float *d0,  float *velocX, float *velocY,
+                    float *velocZ, float dt, int N)
 {
     float i0, i1, j0, j1, k0, k1;
     
@@ -196,7 +197,8 @@ static void advect(int b, float *d, float *d0,  float *velocX, float *velocY, fl
     set_bnd(b, d, N);
 }
 
-static void project(float *velocX, float *velocY, float *velocZ, float *p, float *div, int iter, int N)
+static void project(float *velocX, float *velocY, float *velocZ, float *p,
+                    float *div, int iter, int N)
 {
     for (int k = 1; k < N - 1; k++) {
         for (int j = 1; j < N - 1; j++) {
@@ -301,22 +303,26 @@ void draw_velocity(FluidCube * cube, GLProgram& gl)
     gl.updateMaterial(PENDULUM_COLOR);
 
     for(i = 1; i <= cube->size; i++) {
-	x = (i - 0.5f) * h;
-	for(j =1; j <= cube->size; j++) {
-	    y = (j - 0.5f) * h;
-	    for( k = 1; k <= cube->size; k++) {
-		int index = IX(i, j, k);
-		z = (k - 0.5f) * h;
-		//glVertex3f ( x, y, z );
-		//glVertex3f(x + cube->Vx[index], y + cube->Vy[index], z + cube->Vz[index]);
-		//gl.updateModelMatrix(Matrix4f::translation(Vector3f(x, y, z)));
-		//drawSphere(0.05f, 10, 10);
-		gl.updateModelMatrix(Matrix4f::translation(Vector3f(x + cube->Vx[index], y + cube->Vy[index], z + cube->Vz[index])));
-		//drawSphere(0.025f, 10, 10);
-		drawQuad(.05);
-		//drawLine(Vector3f(x, y, z), Vector3f(x + cube->Vx[index], y + cube->Vy[index], z + cube->Vz[index]));
-	    }
-	}
+	    x = (i - 0.5f) * h;
+        
+        for(j = 1; j <= cube->size; j++) {
+            y = (j - 0.5f) * h;
+            
+            for( k = 1; k <= cube->size; k++) {
+                int index = IX(i, j, k);
+                z = (k - 0.5f) * h;
+                //glVertex3f ( x, y, z );
+                //glVertex3f(x + cube->Vx[index], y + cube->Vy[index], z + cube->Vz[index]);
+                //gl.updateModelMatrix(Matrix4f::translation(Vector3f(x, y, z)));
+                //drawSphere(0.05f, 10, 10);
+                gl.updateModelMatrix(Matrix4f::translation(Vector3f(x + cube->Vx[index],
+                                y + cube->Vy[index], z + cube->Vz[index])));
+                //drawSphere(0.025f, 10, 10);
+                drawQuad(.05);
+                //drawLine(Vector3f(x, y, z), Vector3f(x + cube->Vx[index],
+                //y + cube->Vy[index], z + cube->Vz[index]));
+                }
+        }
     }
     //glEnd();
 }
@@ -329,9 +335,9 @@ void draw_density(FluidCube * cube, GLProgram& gl) {
     float * dens = cube->density;
 
     for (i = 1; i <= cube->size; i++) {
-	x = (i - 0.5f) * h;
+	    x = (i - 0.5f) * h;
         
-        for (j =1; j <= cube->size; j++) {
+        for (j = 1; j <= cube->size; j++) {
             y = (j - 0.5f) * h;
             
             for (k = 1; k <= cube->size; k++) {
